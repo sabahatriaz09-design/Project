@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GALLERY | BagBag Store – Premium Bags for Women</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Cousine:wght@400;700&display=swap"
+        rel="stylesheet">
+    <!-- Lightbox CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+    <!-- AOS animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* Same styles as home page */
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f0f8ff;
+            /* Light cyan background */
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #b9d9eb;
+            /* Soft cyan */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #0a1929, #1a2f45);
+            /* Navy gradient */
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #051220, #102433);
+        }
+
+        .navigation ul {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .navigation ul li {
+            position: relative;
+        }
+
+        .navigation ul li a {
+            text-decoration: none;
+            color: #0a1929;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+
+        .navigation ul li a:hover {
+            color: #00a9ff;
+            /* Bright cyan */
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            min-width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 15px 40px rgba(0, 169, 255, 0.15);
+            padding: 10px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 1px solid #b0e0ff;
+            /* Light cyan border */
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Dropdown items - Vertical layout ke liye */
+        .dropdown-menu li {
+            display: block !important;
+            width: 100%;
+            margin: 0;
+            border-bottom: 1px solid#d4edff;
+        }
+
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu li a {
+            padding: 12px 20px !important;
+            color: #0a1929;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex !important;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .dropdown-menu li a i {
+            font-size: 16px;
+            color: #00a9ff;
+            width: 20px;
+        }
+
+        .dropdown-menu li a:hover {
+            background: linear-gradient(90deg, #e6f4ff, #ffffff);
+            color: #00a9ff;
+            padding-left: 25px !important;
+        }
+
+        .dropdown-menu li a:hover i {
+            color: #0077be;
+            transform: scale(1.1);
+        }
+
+        /* Active state */
+        .navigation ul li a.active {
+            color: #00a9ff;
+        }
+
+        /* Dropdown arrow animation */
+        .dropdown>a i {
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+
+        .dropdown:hover>a i {
+            transform: rotate(180deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navigation ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                border: 1px solid #eee;
+                margin-top: 10px;
+                display: none;
+            }
+
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown>a i {
+                margin-left: auto;
+            }
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            padding: 5px 0;
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+        }
+
+        /* Logo Animation */
+        .logo {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo img {
+            height: 55px;
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 169, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+
+
+
+        /* Header Icons */
+        .header-icons {
+            display: flex;
+            gap: 25px;
+        }
+
+        .header-icons i {
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .header-icons i:hover {
+            color: #00a9ff;
+            transform: scale(1.2);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #00a9ff;
+            color: #0a1929;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+
+            .category-grid,
+            .products-grid,
+            .brands-grid,
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navigation ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                background: #f5f5f5;
+                margin-top: 10px;
+                display: none;
+                width: 100%;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .dropdown-content li a {
+                padding: 10px 20px;
+            }
+        }
+
+        /* Reset navigation styles */
+        .navigation ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+        }
+
+        .navigation ul li {
+            position: relative;
+            list-style: none;
+        }
+
+        .navigation ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 10px 0;
+            display: block;
+        }
+
+        /* Dropdown styles - VERTICAL LIST */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            display: none;
+            z-index: 1000;
+        }
+
+        /* IMPORTANT: Vertical list ke liye */
+        .dropdown-menu li {
+            display: block !important;
+            width: 100%;
+            margin: 0 !important;
+        }
+
+        .dropdown-menu li a {
+            padding: 10px 20px !important;
+            color: #444;
+            font-weight: 500;
+            font-size: 14px;
+            display: block !important;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .dropdown-menu li a:hover {
+            background: #fff5f5;
+            color: #ff6b6b;
+            padding-left: 25px !important;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Active state */
+        .navigation ul li a.active {
+            color: #0a1929;
+        }
+
+        /* Arrow style */
+        .dropdown>a i {
+            font-size: 12px;
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+
+        .dropdown:hover>a i {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .navigation ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                border: 1px solid #eee;
+                margin-top: 10px;
+                display: none;
+            }
+
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+        }
+
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #0a1929 0%, #1a3f5a 100%);
+            padding: 60px 0;
+            color: white;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .page-breadcrumb {
+            font-size: 16px;
+            color: #b0e0ff;
+        }
+
+        .page-breadcrumb a {
+            color: #00a9ff;
+            text-decoration: none;
+        }
+
+        .page-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Gallery Filter */
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 30px;
+            border: 2px solid #00a9ff;
+            border-radius: 50px;
+            color: #0a1929;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: transparent;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #00a9ff;
+            color: white;
+        }
+
+        /* Gallery Grid */
+        .gallery-section {
+            padding: 0 0 80px;
+            background: #f0f8ff;
+        }
+
+        .gallery-item {
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0, 169, 255, 0.1);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 169, 255, 0.25);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.6s;
+            display: block;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, #0a1929, transparent);
+            color: white;
+            padding: 30px 20px 20px;
+            transform: translateY(100%);
+            transition: transform 0.4s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .gallery-overlay p {
+            font-size: 14px;
+            margin-bottom: 0;
+            color: #b0e0ff;
+        }
+
+        .gallery-overlay i {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            color: #00a9ff;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .gallery-item:hover .gallery-overlay i {
+            opacity: 1;
+        }
+
+
+
+        /* Stats Section */
+        .stats-section {
+            padding: 60px 0;
+            background: white;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 700;
+            color: #00a9ff;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #0a1929;
+        }
+
+        /* Toast Notification */
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0a1929;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0, 169, 255, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 9999;
+            border-left: 5px solid #00a9ff;
+        }
+
+        .toast-notification.show {
+            transform: translateX(0);
+        }
+
+        /* Footer */
+        .footer {
+            background: black;
+            /* Darker navy */
+            color: #ffffff;
+            padding: 80px 0 20px;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #0a1929, #00a9ff, #0a1929);
+            background-size: 200% 200%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-section h4 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #00a9ff, #4dc3ff);
+            border-radius: 3px;
+        }
+
+        .footer-section p {
+            color: #b0e0ff;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 169, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.4s;
+        }
+
+        .social-links a:hover {
+            background: #00a9ff;
+            transform: translateY(-5px) rotate(360deg);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul li a {
+            color: #b0e0ff;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-section ul li a:hover {
+            color: #00a9ff;
+            transform: translateX(10px);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(0, 169, 255, 0.1);
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .newsletter-form input::placeholder {
+            color: #80c5ff;
+        }
+
+        .newsletter-form button {
+            width: 55px;
+            height: 55px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00a9ff, #4dc3ff);
+            color: #0a1929;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .newsletter-form button:hover {
+            transform: scale(1.1) rotate(360deg);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #1a3f5a;
+            color: #80c5ff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-notification">
+        <i class="fas fa-check-circle" style="color: #00a9ff; margin-right: 10px;"></i>
+        <span id="toast-message">Item added to cart!</span>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="logo">
+                <a href="home.html">
+                    <img src="images/logo.jpg" alt="BagBag Store">
+                </a>
+            </div>
+
+            <nav class="navigation">
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li class="dropdown">
+                     <a>Women <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="handbags.html">Handbags</a></li>
+                            <li><a href="totebags.html">Tote Bags</a></li>
+                            <li><a href="clutches.html">Clutches</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a>Men <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="backpacks.html">Backpacks</a></li>
+                           <li><a href="slingbag.html">Sling Bags</a></li>
+                             <li><a href="travelbags.html">Travelbags</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="brands.html">Brands</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+
+            <!-- Header Icons - YEH WALA SECTION THEEK KIYA -->
+            <div class="header-icons">
+                <div style="position: relative;" onclick="toggleCart()" class="cart-icon-wrapper">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="headerCartCount">0</span>
+                </div>
+            </div>
+    </header>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title" data-aos="fade-up">Our Gallery</h1>
+            <div class="page-breadcrumb" data-aos="fade-up" data-aos-delay="100">
+                <a href="home.html">Home</a> / <span>Gallery</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Stats -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6" data-aos="fade-up">
+                    <div class="stat-item">
+                        <div class="stat-number">40+</div>
+                        <div class="stat-label">Photos</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="50">
+                    <div class="stat-item">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Brands</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-item">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Happy Customers</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="150">
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Inspiration</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Filter Buttons -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="gallery-filter" data-aos="fade-up">
+                <button class="filter-btn active" onclick="filterGallery('all', this)">All</button>
+                <button class="filter-btn" onclick="filterGallery('handbags', this)">Handbags</button>
+                <button class="filter-btn" onclick="filterGallery('totebags', this)">Totebags</button>
+                <button class="filter-btn" onclick="filterGallery('backpacks', this)">Backpacks</button>
+                <button class="filter-btn" onclick="filterGallery('clutches', this)">Clutches</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="row g-4" id="galleryGrid">
+                <!-- Row 1 -->
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="handbags">
+                    <div class="gallery-item" data-aos="zoom-in">
+                        <img src="images/handbags-3.jpg" alt="Elegant Handbag">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Elegant Handbag</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="handbags">
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50">
+                        <img src="images/handbags-2.jpg" alt="Bag">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Classic Handbag</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="handbags">
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                        <img src="images/handbags-4.jpg" alt="Stylish Backpack">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Trendy Handbag</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="clutches">
+                    <div class="gallery-item" data-aos="zoom-in">
+                        <img src="images/clutch-3.jpg" alt="Classic Tote">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Bridal Clutch</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="totebags">
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50">
+                        <img src="images/totebags-5.jpg" alt="Designer Crossbody">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Grip Totebag</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="clutches">
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                        <img src="images/clutch-4.jpg" alt="Wallet">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Luxury Cluth</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row 3 -->
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="clutches">
+                    <div class="gallery-item" data-aos="zoom-in">
+                        <img src="images/clutch-2.jpg" alt="Classic Tote">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Fancy Clutch</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="totebags">
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50">
+                        <img src="images/totebags-1.jpg" alt="Designer Crossbody">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Canvas Totebag</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="backpacks">
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                        <img src="images/backpacks-4.jpg" alt="Wallet">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Coolbell Backpack</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 4 -->
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="totebags">
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50">
+                        <img src="images/totebags-4.jpg" alt="Summer Tote">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Trendy Soft Totebag</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="backpacks">
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50">
+                        <img src="images/backpacks-3.jpg" alt="Evening Clutch">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Daily Backpack</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 gallery-item-box" data-category="backpacks">
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                        <img src="images/backpacks-1.jpg" alt="Travel Backpack">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <h4>Laptop Backpack</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>About BagBag</h4>
+                    <p>Your one-stop destination for premium quality bags for every occasion. We offer the best
+                        collection from top brands with authentic products.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.pinterest.com/"><i class="fab fa-pinterest"></i></a>
+                        <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                 <div class="footer-section">
+                    <h4>Quick Links</h4>
+                     <ul>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="gallery.html"><i class="fas fa-chevron-right"></i> Gallery</a></li>
+                        <li><a href="feedback.html"><i class="fas fa-chevron-right"></i> Feedback</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Download Catalog</h4>
+                    <ul>
+                        <li><a href="PDF Catalog.pdf" download><i class="fas fa-file-pdf"></i> PDF
+                                Catalog</a></li>
+                        <li><a href="DOC Catalog.docx" download><i class="fas fa-file-word"></i> DOC
+                                Catalog</a></li>
+                        <li><a href="Price list.pdf.pdf" download><i class="fas fa-download"></i> Price
+                                List</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get offers and updates</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Your email">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                 <p>&copy; 2024 BagBag Store. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Cart
+        let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function updateCartCount() {
+            const cartCount = document.getElementById('headerCartCount');
+            const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            if (cartCount) {
+                cartCount.textContent = totalItems;
+            }
+        }
+
+        // Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+       function filterGallery(category, button){
+
+    const items = document.querySelectorAll(".gallery-item-box");
+    const buttons = document.querySelectorAll(".filter-btn");
+
+    // active button change
+    buttons.forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    // filter items
+    items.forEach(item=>{
+
+        const itemCategory = item.getAttribute("data-category");
+
+        if(category === "all" || itemCategory === category){
+            item.style.display = "";
+        } else {
+            item.style.display = "none";
+        }
+
+    });
+
+    showToast(category === "all" ? "Showing all items" : "Showing " + category + " collection");
+}
+
+        // newsletter
+        function subscribeNewsletter() {
+            const email = document.getElementById("newsletterEmail").value;
+
+            if (email && email.includes("@")) {
+                showToast("Successfully subscribed!");
+                document.getElementById("newsletterEmail").value = "";
+            } else {
+                alert("Enter valid email");
+            }
+        }
+
+        // Lightbox
+        lightbox.option({
+            resizeDuration: 200,
+            wrapAround: true
+        });
+
+        // page load
+        document.addEventListener("DOMContentLoaded", function () {
+            updateCartCount();
+        });
+    </script>
+</body>
+
+</html>
